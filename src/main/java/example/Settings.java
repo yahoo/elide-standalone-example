@@ -119,10 +119,8 @@ public abstract class Settings implements ElideStandaloneSettings {
         ResourceHandler resource_handler = new ResourceHandler() {
             @Override
             public Resource getResource(String path) {
-                Resource resource = Resource.newClassPathResource(path);
-                if (resource == null || !resource.exists()) {
-                    resource = Resource.newClassPathResource("META-INF/resources" + path);
-                }
+                Resource resource = Resource.newClassPathResource("META-INF/resources" + path);
+                if(resource == null) resource = super.getResource(path);
                 return resource;
             }
         };
