@@ -21,10 +21,14 @@ import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.util.resource.Resource;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -108,5 +112,23 @@ public abstract class Settings implements ElideStandaloneSettings {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Override
+    public void updateServletContextHandler(ServletContextHandler servletContextHandler) {
+        ResourceHandler resource_handler = new ResourceHandler() {
+            @Override
+            public Resource getResource(String path) {
+                Resource resource = Resource.newClassPathResource(path);
+                if (resource == null || !resource.exists()) {
+                    resource = Resource.newClassPathResource("META-INF/resources" + path);
+                }
+                return resource;
+            }
+        };
+        resource_handler.setDirectoriesListed(true);
+        resource_handler.setWelcomeFiles(new String[]{"index.html"});
+        resource_handler.setResourceBase("/");
+        servletContextHandler.insertHandler(resource_handler);
     }
 }

@@ -119,4 +119,14 @@ public class ExampleTest extends IntegrationTest {
             ).toResponse()))
             .statusCode(HttpStatus.SC_OK);
     }
+
+    @Test
+    public void testWebJar() {
+        when()
+                .get("webjars/swagger-ui/3.23.8/index.html")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_OK);
+
+    }
 }
