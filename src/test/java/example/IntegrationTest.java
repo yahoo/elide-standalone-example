@@ -34,12 +34,13 @@ public class IntegrationTest {
 
     @BeforeAll
     public void init() throws Exception {
-        elide = new ElideStandalone(new CommonElideSettings() {
+        elide = new ElideStandalone(new Settings() {
             @Override
             public int getPort() {
                 return 8080;
             }
 
+            @Override
             public Properties getDatabaseProperties() {
                 Properties options = new Properties();
 

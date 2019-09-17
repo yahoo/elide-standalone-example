@@ -24,6 +24,7 @@ import io.swagger.models.Swagger;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import javax.persistence.EntityManagerFactory;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -33,7 +34,7 @@ import java.util.TimeZone;
 /**
  * This class contains common settings for both test and production.
  */
-public abstract class CommonElideSettings implements ElideStandaloneSettings {
+public abstract class Settings implements ElideStandaloneSettings {
 
     @Override
     public int getPort() {
@@ -91,5 +92,21 @@ public abstract class CommonElideSettings implements ElideStandaloneSettings {
         return builder.build();
     }
 
-    public abstract Properties getDatabaseProperties();
+    public Properties getDatabaseProperties() {
+
+        Properties dbProps;
+        try {
+            dbProps = new Properties();
+            dbProps.load(
+                    Main.class.getClassLoader().getResourceAsStream("dbconfig.properties")
+            );
+
+            dbProps.setProperty("javax.persistence.jdbc.url", System.getenv("JDBC_DATABASE_URL"));
+            dbProps.setProperty("javax.persistence.jdbc.user", System.getenv("JDBC_DATABASE_USERNAME"));
+            dbProps.setProperty("javax.persistence.jdbc.password", System.getenv("JDBC_DATABASE_PASSWORD"));
+            return dbProps;
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 }
