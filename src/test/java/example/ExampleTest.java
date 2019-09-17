@@ -123,7 +123,7 @@ public class ExampleTest extends IntegrationTest {
     @Test
     public void testWebJar() {
         when()
-                .get("webjars/swagger-ui/3.23.8/index.html")
+                .get("index.html")
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_OK);

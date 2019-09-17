@@ -23,12 +23,10 @@ import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.util.resource.Resource;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -58,7 +56,8 @@ public abstract class Settings implements ElideStandaloneSettings {
         Info info = new Info().title("Test Service").version("1.0");
 
         SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-        Swagger swagger = builder.build();
+
+        Swagger swagger = builder.build().basePath("/api/v1");
 
         Map<String, Swagger> docs = new HashMap<>();
         docs.put("test", swagger);
@@ -116,17 +115,15 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     @Override
     public void updateServletContextHandler(ServletContextHandler servletContextHandler) {
-        ResourceHandler resource_handler = new ResourceHandler() {
-            @Override
-            public Resource getResource(String path) {
-                Resource resource = Resource.newClassPathResource("META-INF/resources" + path);
-                if(resource == null) resource = super.getResource(path);
-                return resource;
-            }
-        };
-        resource_handler.setDirectoriesListed(true);
-        resource_handler.setWelcomeFiles(new String[]{"index.html"});
-        resource_handler.setResourceBase("/");
-        servletContextHandler.insertHandler(resource_handler);
+       ResourceHandler resource_handler = new ResourceHandler();
+
+       try {
+           resource_handler.setDirectoriesListed(false);
+           resource_handler.setResourceBase(Settings.class.getClassLoader()
+                   .getResource("META-INF/resources/webjars/swagger-ui/3.23.8").toURI().toString());
+           servletContextHandler.insertHandler(resource_handler);
+       } catch (Exception e) {
+           throw new IllegalStateException(e);
+       }
     }
 }
