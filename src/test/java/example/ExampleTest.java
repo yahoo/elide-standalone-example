@@ -119,4 +119,14 @@ public class ExampleTest extends IntegrationTest {
             ).toResponse()))
             .statusCode(HttpStatus.SC_OK);
     }
+
+    @Test
+    public void testWebJar() {
+        when()
+                .get("index.html")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.SC_OK);
+
+    }
 }

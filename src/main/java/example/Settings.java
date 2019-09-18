@@ -21,6 +21,8 @@ import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import javax.persistence.EntityManagerFactory;
@@ -54,7 +56,8 @@ public abstract class Settings implements ElideStandaloneSettings {
         Info info = new Info().title("Test Service").version("1.0");
 
         SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-        Swagger swagger = builder.build();
+
+        Swagger swagger = builder.build().basePath("/api/v1");
 
         Map<String, Swagger> docs = new HashMap<>();
         docs.put("test", swagger);
@@ -108,5 +111,19 @@ public abstract class Settings implements ElideStandaloneSettings {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Override
+    public void updateServletContextHandler(ServletContextHandler servletContextHandler) {
+       ResourceHandler resource_handler = new ResourceHandler();
+
+       try {
+           resource_handler.setDirectoriesListed(false);
+           resource_handler.setResourceBase(Settings.class.getClassLoader()
+                   .getResource("META-INF/resources/webjars/swagger-ui/3.23.8").toURI().toString());
+           servletContextHandler.insertHandler(resource_handler);
+       } catch (Exception e) {
+           throw new IllegalStateException(e);
+       }
     }
 }
