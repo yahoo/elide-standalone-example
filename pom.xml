@@ -10,7 +10,7 @@
         <jar.finalName>elide-heroku-example</jar.finalName>
         <postgres.version>42.2.7</postgres.version>
         <liquibase.version>3.5.3</liquibase.version>
-        <elide.version>4.5.2</elide.version>
+        <elide.version>4.5.3</elide.version>
         <swagger-ui.version>3.23.8</swagger-ui.version>
     </properties>
 

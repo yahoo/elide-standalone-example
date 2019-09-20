@@ -6,15 +6,8 @@
 
 package example;
 
-import com.yahoo.elide.ElideSettings;
-import com.yahoo.elide.ElideSettingsBuilder;
 import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
-import com.yahoo.elide.core.DataStore;
 import com.yahoo.elide.core.EntityDictionary;
-import com.yahoo.elide.core.filter.dialect.RSQLFilterDialect;
-import com.yahoo.elide.datastores.jpa.JpaDataStore;
-import com.yahoo.elide.datastores.jpa.transaction.NonJtaTransaction;
-import com.yahoo.elide.standalone.Util;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.models.ArtifactGroup;
 import example.models.ArtifactProduct;
@@ -28,16 +21,13 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.glassfish.hk2.api.ServiceLocator;
 
-import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.TimeZone;
 
 /**
  * This class contains common settings for both test and production.
@@ -97,29 +87,6 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public ElideSettings getElideSettings(ServiceLocator injector) {
-        EntityManagerFactory entityManagerFactory = Util.getEntityManagerFactory(this.getModelPackageName(),
-                getDatabaseProperties());
-        DataStore dataStore = new JpaDataStore(() -> {
-            return entityManagerFactory.createEntityManager();
-        }, (em) -> {
-            return new NonJtaTransaction(em);
-        });
-        Map var10002 = this.getCheckMappings();
-        injector.getClass();
-        EntityDictionary dictionary = new EntityDictionary(var10002, injector::inject);
-        ElideSettingsBuilder builder = (new ElideSettingsBuilder(dataStore))
-                .withUseFilterExpressions(true)
-                .withEntityDictionary(dictionary)
-                .withJoinFilterDialect(new RSQLFilterDialect(dictionary))
-                .withSubqueryFilterDialect(new RSQLFilterDialect(dictionary));
-        if (this.enableIS06081Dates()) {
-            builder = builder.withISO8601Dates("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"));
-        }
-
-        return builder.build();
-    }
-
     public Properties getDatabaseProperties() {
         Properties dbProps;
 
