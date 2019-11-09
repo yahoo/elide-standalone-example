@@ -6,9 +6,11 @@
 
 package example;
 
+import com.google.common.collect.Lists;
 import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
 import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
+import example.filters.CorsFilter;
 import example.models.ArtifactGroup;
 import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
@@ -25,6 +27,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -42,7 +45,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     public Settings(boolean inMemory) {
         jdbcUrl = Optional.ofNullable(System.getenv("JDBC_DATABASE_URL"))
-                .orElse("jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE");
+                .orElse("jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1");
 
         jdbcUser = Optional.ofNullable(System.getenv("JDBC_DATABASE_USERNAME"))
                 .orElse("sa");
@@ -110,13 +113,18 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
+    public List<Class<?>> getFilters() {
+        return Lists.newArrayList(CorsFilter.class);
+    }
+
+    @Override
     public void updateServletContextHandler(ServletContextHandler servletContextHandler) {
        ResourceHandler resource_handler = new ResourceHandler();
 
        try {
            resource_handler.setDirectoriesListed(false);
            resource_handler.setResourceBase(Settings.class.getClassLoader()
-                   .getResource("META-INF/resources/webjars/swagger-ui/3.23.8").toURI().toString());
+                   .getResource("META-INF/resources/").toURI().toString());
            servletContextHandler.insertHandler(resource_handler);
        } catch (Exception e) {
            throw new IllegalStateException(e);

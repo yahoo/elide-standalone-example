@@ -121,7 +121,7 @@ public class ExampleTest extends IntegrationTest {
     }
 
     @Test
-    public void testWebJar() {
+    public void testLandingPage() {
         when()
                 .get("index.html")
                 .then()
