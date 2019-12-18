@@ -2,8 +2,6 @@
 
 An archetype Elide project for Heroku using Postgres DB.  
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aklish/elide-heroku-example)
-
 ## Background
 
 This project is the sample code for [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
@@ -14,10 +12,6 @@ To build and run:
 
 1. mvn clean install
 2. mvn exec:java -Dexec.mainClass="example.Main"
-
-To run from Heroku:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aklish/elide-spring)
 
 ## Usage
 
