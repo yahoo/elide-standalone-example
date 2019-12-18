@@ -13,6 +13,10 @@ To build and run:
 1. mvn clean install
 2. mvn exec:java -Dexec.mainClass="example.Main"
 
+To run from Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/yahoo/elide-standalone-example)
+
 ## Usage
 
 See [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
