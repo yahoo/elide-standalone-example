@@ -11,6 +11,7 @@ import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
 import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
+import example.filters.AuthFilter;
 import example.models.ArtifactGroup;
 import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
@@ -71,6 +72,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         dictionary.bindEntity(ArtifactGroup.class);
         dictionary.bindEntity(ArtifactProduct.class);
         dictionary.bindEntity(ArtifactVersion.class);
+
         Info info = new Info().title("Test Service").version("1.0");
 
         SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
@@ -80,6 +82,11 @@ public abstract class Settings implements ElideStandaloneSettings {
         Map<String, Swagger> docs = new HashMap<>();
         docs.put("test", swagger);
         return docs;
+    }
+    
+    @Override
+    public boolean enableAsync() {
+        return true;
     }
 
     @Override
@@ -114,7 +121,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     @Override
     public List<Class<?>> getFilters() {
-        return Lists.newArrayList(CorsFilter.class);
+        return Lists.newArrayList(CorsFilter.class, AuthFilter.class);
     }
 
     @Override
