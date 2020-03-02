@@ -90,6 +90,11 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
+    public boolean enableAsyncCleanup() {
+        return true;
+    }
+
+    @Override
     public String getModelPackageName() {
 
         //This needs to be changed to the package where your models live.
