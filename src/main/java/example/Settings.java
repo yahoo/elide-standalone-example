@@ -83,6 +83,11 @@ public abstract class Settings implements ElideStandaloneSettings {
         docs.put("test", swagger);
         return docs;
     }
+
+    @Override
+    public boolean enableGraphQL() {
+        return true;
+    }
     
     @Override
     public boolean enableAsync() {
@@ -150,6 +155,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
+        options.put("hibernate.hbm2ddl.auto", "validate");
 
         options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
         options.put("javax.persistence.jdbc.url", jdbcUrl);
