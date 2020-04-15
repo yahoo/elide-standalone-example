@@ -3,4 +3,7 @@
 .project
 .settings/
 dependency-reduced-pom.xml
-
+.idea/
+elide-heroku-example.iml
+src/main/main.iml
+src/test/test.iml
