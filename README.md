@@ -12,6 +12,7 @@ To build and run:
 
 1. mvn clean install
 2. mvn exec:java -Dexec.mainClass="example.Main"
+3. Browse http://localhost:8080/
 
 To run from Heroku:
 
