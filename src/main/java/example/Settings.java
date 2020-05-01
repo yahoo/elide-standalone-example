@@ -8,6 +8,7 @@ package example;
 
 import com.google.common.collect.Lists;
 import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
+import com.yahoo.elide.contrib.swagger.resources.DocEndpoint;
 import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
@@ -27,9 +28,9 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import java.io.IOException;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -66,7 +67,7 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public Map<String, Swagger> enableSwagger() {
+    public List<DocEndpoint.SwaggerRegistration> enableSwagger() {
         EntityDictionary dictionary = new EntityDictionary(new HashMap());
 
         dictionary.bindEntity(ArtifactGroup.class);
@@ -79,8 +80,8 @@ public abstract class Settings implements ElideStandaloneSettings {
 
         Swagger swagger = builder.build().basePath("/api/v1");
 
-        Map<String, Swagger> docs = new HashMap<>();
-        docs.put("test", swagger);
+        List<DocEndpoint.SwaggerRegistration> docs = new ArrayList<>();
+        docs.add(new DocEndpoint.SwaggerRegistration("test", swagger));
         return docs;
     }
 
