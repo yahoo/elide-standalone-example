@@ -6,13 +6,15 @@
 
 package example;
 
+import static com.yahoo.elide.core.EntityDictionary.NO_VERSION;
+
 import com.google.common.collect.Lists;
 import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
 import com.yahoo.elide.contrib.swagger.resources.DocEndpoint;
 import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.filters.AuthFilter;
+import example.filters.FakeAuthFilter;
 import example.models.ArtifactGroup;
 import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
@@ -74,7 +76,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         dictionary.bindEntity(ArtifactProduct.class);
         dictionary.bindEntity(ArtifactVersion.class);
 
-        Info info = new Info().title("Test Service").version("1.0");
+        Info info = new Info().title("Test Service").version(NO_VERSION);
 
         SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
 
@@ -132,7 +134,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     @Override
     public List<Class<?>> getFilters() {
-        return Lists.newArrayList(CorsFilter.class, AuthFilter.class);
+        return Lists.newArrayList(CorsFilter.class, FakeAuthFilter.class);
     }
 
     @Override
