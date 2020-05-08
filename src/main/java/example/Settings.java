@@ -14,7 +14,7 @@ import com.yahoo.elide.contrib.swagger.resources.DocEndpoint;
 import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.filters.DemoAuthFilter;
+import example.filters.ExampleAuthFilter;
 import example.models.ArtifactGroup;
 import example.models.ArtifactProduct;
 import example.models.ArtifactVersion;
@@ -134,7 +134,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     @Override
     public List<Class<?>> getFilters() {
-        return Lists.newArrayList(CorsFilter.class, DemoAuthFilter.class);
+        return Lists.newArrayList(CorsFilter.class, ExampleAuthFilter.class);
     }
 
     @Override
