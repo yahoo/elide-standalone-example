@@ -17,7 +17,7 @@ import javax.ws.rs.core.SecurityContext;
  * This implementation fakes an anonymous Test user.
  * Please replace with your implementation when using this class.
  */
-public class DemoAuthFilter implements ContainerRequestFilter {
+public class ExampleAuthFilter implements ContainerRequestFilter {
 
     private static final String TEST_USER = "test";
 
