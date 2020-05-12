@@ -18,9 +18,6 @@ To run from Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/yahoo/elide-standalone-example)
 
-Note:
-The project includes an example auth filter that attaches a test user to the security context for async module operation checks. Please remove and provide your own implementation as needed. Refer src/main/java/example/filters/ExampleAuthFilter.java
-
 ## Usage
 
 See [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
