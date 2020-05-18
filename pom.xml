@@ -86,6 +86,14 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>bintray</id>
+            <name>Yahoo bintray repo</name>
+            <url>https://yahoo.bintray.com/maven</url>
+        </repository>
+    <repositories>
+      
     <build>
         <resources>
             <resource>
