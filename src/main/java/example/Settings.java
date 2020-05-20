@@ -24,6 +24,7 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.util.HashMap;
@@ -65,28 +66,26 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public Map<String, Swagger> enableSwagger() {
-        EntityDictionary dictionary = new EntityDictionary(new HashMap());
-
-        dictionary.bindEntity(ArtifactGroup.class);
-        dictionary.bindEntity(ArtifactProduct.class);
-        dictionary.bindEntity(ArtifactVersion.class);
-        Info info = new Info().title("Test Service").version("1.0");
-
-        SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-
-        Swagger swagger = builder.build().basePath("/api/v1");
-
-        Map<String, Swagger> docs = new HashMap<>();
-        docs.put("test", swagger);
-        return docs;
+    public boolean enableSwagger() {
+        return true;
     }
 
     @Override
     public String getModelPackageName() {
-
         //This needs to be changed to the package where your models live.
         return "example.models";
+//    	return "dynamicconfig.models";
+    }
+    
+    @Override
+    public boolean enableDynamicModelConfig() {
+        return true;
+    }
+    
+    @Override
+    public String getDynamicConfigPath() {
+        File file = new File("src/main/resources/models");
+        return file.getAbsolutePath();
     }
 
     @Override

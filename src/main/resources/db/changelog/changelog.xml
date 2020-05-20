@@ -25,6 +25,18 @@
 	  PRIMARY KEY (name),
 	  FOREIGN KEY (artifact_name) REFERENCES ArtifactProduct(name)
 	);
+	CREATE TABLE PlayerStats (
+	  name varchar(255) NOT NULL,
+      countryId varchar(255) DEFAULT NULL,
+	  highScore integer DEFAULT NULL,
+	  createdOn date,
+	  PRIMARY KEY (name)
+	);
+	CREATE TABLE PlayerCountry (
+	  id varchar(255) NOT NULL,
+      isoCode varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (id)
+	);
         </sql>
     </changeSet>
     <changeSet author="admin" id="1539122270">
@@ -37,6 +49,14 @@
 		('elide-core','Core','The guts of Elide','com.yahoo.elide'),
 		('elide-datastore-hibernate5','Hibernate5 Datastore','A datastore that uses Hibernate 5 to communicate with the database','com.yahoo.elide'),
 		('elide-standalone','Standalone','A pre-configured, standalone Elide webservice','com.yahoo.elide');
+
+    INSERT INTO PlayerStats (name,countryId,createdOn) VALUES
+	    ('SerenaWilliams','1','2000-10-01'),
+	    ('SaniaMirza','2','2002-10-01');
+		    
+	INSERT INTO PlayerCountry (id,isoCode) VALUES
+	    ('1','USA'),
+	    ('2','IND');
         </sql>
     </changeSet>
 </databaseChangeLog>
