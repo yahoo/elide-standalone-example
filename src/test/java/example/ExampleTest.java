@@ -76,6 +76,30 @@ public class ExampleTest extends IntegrationTest {
     }
 
     /**
+     * This test static model
+     */
+    @Test
+    void playerStatsTest() {
+    	given()
+        .when()
+        .get("/api/v1/playerStats")
+        .then()
+        .statusCode(200);
+    }
+    
+    /**
+     * This test dynamic config created view
+     */
+    @Test
+    void playerStatsViewTest() {
+    	given()
+        .when()
+        .get("/api/v1/playerStatsView")
+        .then()
+        .statusCode(200);
+    }
+    
+    /**
      * This test demonstrates an example test using the GraphQL DSL.
      */
     @Test
@@ -127,6 +151,5 @@ public class ExampleTest extends IntegrationTest {
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.SC_OK);
-
     }
 }
