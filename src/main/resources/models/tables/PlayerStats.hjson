@@ -11,7 +11,7 @@
         joins: [
             {
                 name: playerCountry
-                to: PlayerCountryView
+                to: PlayerCountry
                 type: toOne
                 definition: '%join.id = %from.countryId'
             }
