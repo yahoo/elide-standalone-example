@@ -138,6 +138,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
+        options.put("hibernate.default_batch_fetch_size", 100);
 
         options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
         options.put("javax.persistence.jdbc.url", jdbcUrl);
