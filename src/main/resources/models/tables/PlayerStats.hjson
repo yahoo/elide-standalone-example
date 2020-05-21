@@ -1,6 +1,6 @@
 {
     tables: [{
-        name: PlayerStatsView
+        name: PlayerStats
         table: PlayerStats
         description:
         '''

@@ -88,18 +88,6 @@ public class ExampleTest extends IntegrationTest {
     }
     
     /**
-     * This test dynamic config created view
-     */
-    @Test
-    void playerStatsViewTest() {
-    	given()
-        .when()
-        .get("/api/v1/playerStatsView")
-        .then()
-        .statusCode(200);
-    }
-    
-    /**
      * This test demonstrates an example test using the GraphQL DSL.
      */
     @Test

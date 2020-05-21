@@ -74,7 +74,6 @@ public abstract class Settings implements ElideStandaloneSettings {
     public String getModelPackageName() {
         //This needs to be changed to the package where your models live.
         return "example.models";
-//    	return "dynamicconfig.models";
     }
     
     @Override
@@ -84,8 +83,7 @@ public abstract class Settings implements ElideStandaloneSettings {
     
     @Override
     public String getDynamicConfigPath() {
-        File file = new File("src/main/resources/models");
-        return file.getAbsolutePath();
+    	return "src/main/resources/models";
     }
 
     @Override
