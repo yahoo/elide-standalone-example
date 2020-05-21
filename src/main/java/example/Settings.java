@@ -7,15 +7,8 @@
 package example;
 
 import com.google.common.collect.Lists;
-import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
-import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.models.ArtifactGroup;
-import example.models.ArtifactProduct;
-import example.models.ArtifactVersion;
-import io.swagger.models.Info;
-import io.swagger.models.Swagger;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
@@ -24,12 +17,9 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
