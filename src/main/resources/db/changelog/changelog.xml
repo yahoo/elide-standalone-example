@@ -27,14 +27,14 @@
 	);
 	CREATE TABLE PlayerStats (
 	  name varchar(255) NOT NULL,
-      countryId varchar(255) DEFAULT NULL,
+	  countryId varchar(255) DEFAULT NULL,
 	  highScore integer DEFAULT NULL,
 	  createdOn date,
 	  PRIMARY KEY (name)
 	);
 	CREATE TABLE PlayerCountry (
 	  id varchar(255) NOT NULL,
-      isoCode varchar(255) DEFAULT NULL,
+	  isoCode varchar(255) DEFAULT NULL,
 	  PRIMARY KEY (id)
 	);
         </sql>

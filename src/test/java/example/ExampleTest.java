@@ -80,9 +80,8 @@ public class ExampleTest extends IntegrationTest {
      */
     @Test
     void playerStatsTest() {
-    	given()
-        .when()
-        .get("/api/v1/playerStats")
+        given()
+        .when().get("/api/v1/playerStats")
         .then()
         .statusCode(200);
     }
