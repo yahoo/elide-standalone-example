@@ -6,19 +6,9 @@
 
 package example;
 
-import static com.yahoo.elide.core.EntityDictionary.NO_VERSION;
-
 import com.google.common.collect.Lists;
-import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
-import com.yahoo.elide.contrib.swagger.resources.DocEndpoint;
-import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.models.ArtifactGroup;
-import example.models.ArtifactProduct;
-import example.models.ArtifactVersion;
-import io.swagger.models.Info;
-import io.swagger.models.Swagger;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
@@ -29,8 +19,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
