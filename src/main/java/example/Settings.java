@@ -68,22 +68,8 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public List<DocEndpoint.SwaggerRegistration> enableSwagger() {
-        EntityDictionary dictionary = new EntityDictionary(new HashMap());
-
-        dictionary.bindEntity(ArtifactGroup.class);
-        dictionary.bindEntity(ArtifactProduct.class);
-        dictionary.bindEntity(ArtifactVersion.class);
-
-        Info info = new Info().title("Test Service").version(NO_VERSION);
-
-        SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-
-        Swagger swagger = builder.build().basePath("/api/v1");
-
-        List<DocEndpoint.SwaggerRegistration> docs = new ArrayList<>();
-        docs.add(new DocEndpoint.SwaggerRegistration("test", swagger));
-        return docs;
+    public boolean enableSwagger() {
+        return true;
     }
 
     @Override
