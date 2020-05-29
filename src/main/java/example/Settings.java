@@ -7,15 +7,8 @@
 package example;
 
 import com.google.common.collect.Lists;
-import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
-import com.yahoo.elide.core.EntityDictionary;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.models.ArtifactGroup;
-import example.models.ArtifactProduct;
-import example.models.ArtifactVersion;
-import io.swagger.models.Info;
-import io.swagger.models.Swagger;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
@@ -26,9 +19,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -65,21 +56,23 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public Map<String, Swagger> enableSwagger() {
-        EntityDictionary dictionary = new EntityDictionary(new HashMap());
+    public boolean enableSwagger() {
+        return true;
+    }
 
-        dictionary.bindEntity(ArtifactGroup.class);
-        dictionary.bindEntity(ArtifactProduct.class);
-        dictionary.bindEntity(ArtifactVersion.class);
-        Info info = new Info().title("Test Service").version("1.0");
+    @Override
+    public boolean enableGraphQL() {
+        return true;
+    }
+    
+    @Override
+    public boolean enableAsync() {
+        return true;
+    }
 
-        SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-
-        Swagger swagger = builder.build().basePath("/api/v1");
-
-        Map<String, Swagger> docs = new HashMap<>();
-        docs.put("test", swagger);
-        return docs;
+    @Override
+    public boolean enableAsyncCleanup() {
+        return true;
     }
 
     @Override
@@ -138,6 +131,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
+        options.put("hibernate.hbm2ddl.auto", "validate");
 
         options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
         options.put("javax.persistence.jdbc.url", jdbcUrl);
