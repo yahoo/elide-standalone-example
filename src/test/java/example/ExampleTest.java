@@ -139,4 +139,13 @@ public class ExampleTest extends IntegrationTest {
                 .log().all()
                 .statusCode(HttpStatus.SC_OK);
     }
+
+    @Test
+    public void testAsyncApiEndPoint() throws Exception {
+        given()
+                .when()
+                .get("/api/v1/asyncQuery")
+                .then()
+                .statusCode(200);
+    }
 }

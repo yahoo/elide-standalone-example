@@ -61,6 +61,21 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
+    public boolean enableGraphQL() {
+        return true;
+    }
+    
+    @Override
+    public boolean enableAsync() {
+        return true;
+    }
+
+    @Override
+    public boolean enableAsyncCleanup() {
+        return true;
+    }
+
+    @Override
     public String getModelPackageName() {
         //This needs to be changed to the package where your models live.
         return "example.models";
@@ -125,6 +140,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
+        options.put("hibernate.hbm2ddl.auto", "validate");
 
         options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
         options.put("javax.persistence.jdbc.url", jdbcUrl);
