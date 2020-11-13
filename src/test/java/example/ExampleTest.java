@@ -138,4 +138,13 @@ public class ExampleTest extends IntegrationTest {
                 .then()
                 .statusCode(200);
     }
+
+    @Test
+    public void testDownloadAPI() throws Exception {
+        given()
+                .when()
+                .get("/api/v1/Downloads?fields[Downloads]=downloads,group,product")
+                .then()
+                .statusCode(200);
+    }
 }

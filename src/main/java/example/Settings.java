@@ -9,7 +9,6 @@ package example;
 import com.google.common.collect.Lists;
 import com.yahoo.elide.async.service.dao.AsyncAPIDAO;
 import com.yahoo.elide.async.service.dao.DefaultAsyncAPIDAO;
-import com.yahoo.elide.async.service.storageengine.ResultStorageEngine;
 import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
@@ -77,6 +76,26 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
+    public boolean enableDynamicModelConfig() {
+        return true;
+    }
+
+    @Override
+    public boolean enableAggregationDataStore() {
+        return true;
+    }
+
+    @Override
+    public String getDefaultDialect() {
+        return "h2";
+    }
+
+    @Override
+    public String getDynamicConfigPath() {
+        return "src/main/resources/analytics";
+    }
+
+    @Override
     public ElideStandaloneAsyncSettings getAsyncProperties() {
         return new ElideStandaloneAsyncSettings() {
 
@@ -88,11 +107,6 @@ public abstract class Settings implements ElideStandaloneSettings {
             @Override
             public boolean enableCleanup() {
                 return true;
-            }
-
-            @Override
-            public AsyncAPIDAO getAPIDAO() {
-                return new DefaultAsyncAPIDAO();
             }
         };
     }
@@ -158,6 +172,10 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     public void runLiquibaseMigrations() throws Exception {
+
+        if(inMemory) {
+            Class.forName("org.h2.Driver");
+        }
         //Run Liquibase Initialization Script
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
                 new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)));
