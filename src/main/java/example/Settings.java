@@ -172,10 +172,6 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     public void runLiquibaseMigrations() throws Exception {
-
-        if(inMemory) {
-            Class.forName("org.h2.Driver");
-        }
         //Run Liquibase Initialization Script
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
                 new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)));
