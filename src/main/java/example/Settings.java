@@ -7,8 +7,6 @@
 package example;
 
 import com.google.common.collect.Lists;
-import com.yahoo.elide.async.service.dao.AsyncAPIDAO;
-import com.yahoo.elide.async.service.dao.DefaultAsyncAPIDAO;
 import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
