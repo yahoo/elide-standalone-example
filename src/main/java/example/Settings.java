@@ -7,6 +7,7 @@
 package example;
 
 import com.google.common.collect.Lists;
+import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
 import liquibase.Liquibase;
@@ -66,20 +67,46 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
     
     @Override
-    public boolean enableAsync() {
-        return true;
-    }
-
-    @Override
-    public boolean enableAsyncCleanup() {
-        return true;
-    }
-
-    @Override
     public String getModelPackageName() {
 
         //This needs to be changed to the package where your models live.
         return "example.models";
+    }
+
+    @Override
+    public boolean enableDynamicModelConfig() {
+        return true;
+    }
+
+    @Override
+    public boolean enableAggregationDataStore() {
+        return true;
+    }
+
+    @Override
+    public String getDefaultDialect() {
+        return "h2";
+    }
+
+    @Override
+    public String getDynamicConfigPath() {
+        return "src/main/resources/analytics";
+    }
+
+    @Override
+    public ElideStandaloneAsyncSettings getAsyncProperties() {
+        return new ElideStandaloneAsyncSettings() {
+
+            @Override
+            public boolean enabled() {
+                return true;
+            }
+
+            @Override
+            public boolean enableCleanup() {
+                return true;
+            }
+        };
     }
 
     @Override
