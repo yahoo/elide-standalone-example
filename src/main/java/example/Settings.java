@@ -7,6 +7,8 @@
 package example;
 
 import com.google.common.collect.Lists;
+import com.yahoo.elide.datastores.aggregation.queryengines.sql.dialects.SQLDialectFactory;
+import com.yahoo.elide.standalone.config.ElideStandaloneAnalyticSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
@@ -65,32 +67,41 @@ public abstract class Settings implements ElideStandaloneSettings {
     public boolean enableGraphQL() {
         return true;
     }
-    
+
     @Override
     public String getModelPackageName() {
-
         //This needs to be changed to the package where your models live.
         return "example.models";
     }
 
     @Override
-    public boolean enableDynamicModelConfig() {
-        return true;
-    }
+    public ElideStandaloneAnalyticSettings getAnalyticProperties() {
+        ElideStandaloneAnalyticSettings analyticPropeties = new ElideStandaloneAnalyticSettings() {
+            @Override
+            public boolean enableDynamicModelConfig() {
+                return true;
+            }
 
-    @Override
-    public boolean enableAggregationDataStore() {
-        return true;
-    }
+            @Override
+            public boolean enableAggregationDataStore() {
+                return true;
+            }
 
-    @Override
-    public String getDefaultDialect() {
-        return "h2";
-    }
+            @Override
+            public String getDefaultDialect() {
+                if (inMemory) {
+                    return SQLDialectFactory.getDefaultDialect().getDialectType();
+                } else {
+                    return SQLDialectFactory.getPostgresDialect().getDialectType();
+                }
+            }
 
-    @Override
-    public String getDynamicConfigPath() {
-        return "src/main/resources/analytics";
+            @Override
+            public String getDynamicConfigPath() {
+                return "src/main/resources/analytics";
+            }
+        };
+        return analyticPropeties;
     }
 
     @Override
