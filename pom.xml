@@ -16,8 +16,7 @@
         <jar.finalName>elide-heroku-example</jar.finalName>
         <postgres.version>42.2.7</postgres.version>
         <liquibase.version>3.5.3</liquibase.version>
-        <!-- Change to Version that supports postgres before merge -->
-        <elide.version>5.0.0-pr26-SNAPSHOT</elide.version>
+        <elide.version>5.0.0-pr27</elide.version>
         <swagger-ui.version>3.23.8</swagger-ui.version>
     </properties>
 
