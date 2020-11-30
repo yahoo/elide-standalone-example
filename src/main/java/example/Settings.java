@@ -88,6 +88,11 @@ public abstract class Settings implements ElideStandaloneSettings {
             }
 
             @Override
+            public boolean enableMetaDataStore() {
+                return false;
+            }
+
+            @Override
             public String getDefaultDialect() {
                 if (inMemory) {
                     return SQLDialectFactory.getDefaultDialect().getDialectType();
