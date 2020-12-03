@@ -195,6 +195,7 @@ public abstract class Settings implements ElideStandaloneSettings {
                 new ClassLoaderResourceAccessor(),
                 database);
 
-        liquibase.update("db1");
+        String context = inMemory ? "non-heroku" : "heroku";
+        liquibase.update(context);
     }
 }

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="admin" id="1539122070" runAlways="true" context="heroku">
+        <sql>
+      CREATE DOMAIN CLOB as TEXT;
+        </sql>
+    </changeSet>
     <changeSet author="admin" id="1539122071">
         <sql>
      CREATE TABLE ArtifactGroup (
@@ -51,6 +56,12 @@
        FOREIGN KEY (group_id) REFERENCES ArtifactGroup(name),
        FOREIGN KEY (product_id) REFERENCES ArtifactProduct(name)
      );
+        </sql>
+    </changeSet>
+    <changeSet author="admin" id="1539122072" runAlways="true" context="heroku">
+        <sql>
+      ALTER TABLE AsyncQuery ALTER COLUMN responseBody TYPE TEXT;
+      DROP DOMAIN IF EXISTS CLOB;
         </sql>
     </changeSet>
     <changeSet author="admin" id="1539122270">
