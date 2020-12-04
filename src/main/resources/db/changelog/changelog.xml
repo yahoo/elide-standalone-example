@@ -41,7 +41,7 @@
        status varchar(255),
        updatedOn timestamp,
        contentLength integer,
-       responseBody varchar(255),
+       responseBody CLOB,
        completedOn timestamp,
        httpStatus integer,
        recordCount integer,
