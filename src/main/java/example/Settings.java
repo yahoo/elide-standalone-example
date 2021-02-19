@@ -122,6 +122,11 @@ public abstract class Settings implements ElideStandaloneSettings {
             public boolean enableCleanup() {
                 return true;
             }
+
+            @Override
+            public boolean enableExport() {
+                return true;
+            }
         };
     }
 
