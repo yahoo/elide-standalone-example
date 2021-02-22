@@ -11,7 +11,7 @@ This project is the sample code for [Elide's Getting Started documentation](http
 To build and run:
 
 1. mvn clean install
-2. mvn exec:java -Dexec.mainClass="example.Main"
+2. java -jar target/elide-heroku-example.jar
 3. Browse http://localhost:8080/
 
 To run from Heroku:

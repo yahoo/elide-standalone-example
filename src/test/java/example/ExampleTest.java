@@ -5,27 +5,27 @@
  */
 package example;
 
-import com.yahoo.elide.contrib.testhelpers.graphql.GraphQLDSL;
-import com.yahoo.elide.core.HttpStatus;
+import com.yahoo.elide.core.exceptions.HttpStatus;
+import com.yahoo.elide.test.graphql.GraphQLDSL;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.MediaType;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
-import static com.yahoo.elide.contrib.testhelpers.graphql.GraphQLDSL.field;
-import static com.yahoo.elide.contrib.testhelpers.graphql.GraphQLDSL.query;
-import static com.yahoo.elide.contrib.testhelpers.graphql.GraphQLDSL.selection;
-import static com.yahoo.elide.contrib.testhelpers.graphql.GraphQLDSL.selections;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.attr;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.attributes;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.data;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.id;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.linkage;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.relation;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.relationships;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.resource;
-import static com.yahoo.elide.contrib.testhelpers.jsonapi.JsonApiDSL.type;
+import static com.yahoo.elide.test.graphql.GraphQLDSL.field;
+import static com.yahoo.elide.test.graphql.GraphQLDSL.query;
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selection;
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selections;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attr;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attributes;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.data;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.linkage;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.relation;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.relationships;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource;
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -128,5 +128,23 @@ public class ExampleTest extends IntegrationTest {
                 .log().all()
                 .statusCode(HttpStatus.SC_OK);
 
+    }
+
+    @Test
+    public void testAsyncApiEndPoint() throws Exception {
+        given()
+                .when()
+                .get("/api/v1/asyncQuery")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testDownloadAPI() throws Exception {
+        given()
+                .when()
+                .get("/api/v1/downloads?fields[downloads]=downloads,group,product")
+                .then()
+                .statusCode(200);
     }
 }

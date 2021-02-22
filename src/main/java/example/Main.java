@@ -23,7 +23,9 @@ public class Main {
 
         ElideStandalone elide = new ElideStandalone(settings);
 
-        settings.runLiquibaseMigrations();
+        if (inMemory) {
+            settings.runLiquibaseMigrations();
+        }
 
         elide.start();
     }

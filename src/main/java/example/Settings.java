@@ -7,15 +7,11 @@
 package example;
 
 import com.google.common.collect.Lists;
-import com.yahoo.elide.contrib.swagger.SwaggerBuilder;
-import com.yahoo.elide.core.EntityDictionary;
+import com.yahoo.elide.datastores.aggregation.queryengines.sql.dialects.SQLDialectFactory;
+import com.yahoo.elide.standalone.config.ElideStandaloneAnalyticSettings;
+import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import example.filters.CorsFilter;
-import example.models.ArtifactGroup;
-import example.models.ArtifactProduct;
-import example.models.ArtifactVersion;
-import io.swagger.models.Info;
-import io.swagger.models.Swagger;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
@@ -26,9 +22,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -65,28 +59,75 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public Map<String, Swagger> enableSwagger() {
-        EntityDictionary dictionary = new EntityDictionary(new HashMap());
+    public boolean enableSwagger() {
+        return true;
+    }
 
-        dictionary.bindEntity(ArtifactGroup.class);
-        dictionary.bindEntity(ArtifactProduct.class);
-        dictionary.bindEntity(ArtifactVersion.class);
-        Info info = new Info().title("Test Service").version("1.0");
-
-        SwaggerBuilder builder = new SwaggerBuilder(dictionary, info);
-
-        Swagger swagger = builder.build().basePath("/api/v1");
-
-        Map<String, Swagger> docs = new HashMap<>();
-        docs.put("test", swagger);
-        return docs;
+    @Override
+    public boolean enableGraphQL() {
+        return true;
     }
 
     @Override
     public String getModelPackageName() {
-
         //This needs to be changed to the package where your models live.
         return "example.models";
+    }
+
+    @Override
+    public ElideStandaloneAnalyticSettings getAnalyticProperties() {
+        ElideStandaloneAnalyticSettings analyticPropeties = new ElideStandaloneAnalyticSettings() {
+            @Override
+            public boolean enableDynamicModelConfig() {
+                return true;
+            }
+
+            @Override
+            public boolean enableAggregationDataStore() {
+                return true;
+            }
+
+            @Override
+            public boolean enableMetaDataStore() {
+                return false;
+            }
+
+            @Override
+            public String getDefaultDialect() {
+                if (inMemory) {
+                    return SQLDialectFactory.getDefaultDialect().getDialectType();
+                } else {
+                    return SQLDialectFactory.getPostgresDialect().getDialectType();
+                }
+            }
+
+            @Override
+            public String getDynamicConfigPath() {
+                return "src/main/resources/analytics";
+            }
+        };
+        return analyticPropeties;
+    }
+
+    @Override
+    public ElideStandaloneAsyncSettings getAsyncProperties() {
+        return new ElideStandaloneAsyncSettings() {
+
+            @Override
+            public boolean enabled() {
+                return true;
+            }
+
+            @Override
+            public boolean enableCleanup() {
+                return true;
+            }
+
+            @Override
+            public boolean enableExport() {
+                return true;
+            }
+        };
     }
 
     @Override
@@ -139,6 +180,7 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
         options.put("hibernate.default_batch_fetch_size", 100);
+        options.put("hibernate.hbm2ddl.auto", "validate");
 
         options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
         options.put("javax.persistence.jdbc.url", jdbcUrl);
