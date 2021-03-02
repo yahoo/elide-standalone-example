@@ -7,6 +7,7 @@
 package example;
 
 import com.yahoo.elide.standalone.ElideStandalone;
+import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -25,6 +26,27 @@ public class IntegrationTest {
             @Override
             public int getPort() {
                 return 8080;
+            }
+
+            @Override
+            public ElideStandaloneAsyncSettings getAsyncProperties() {
+                return new ElideStandaloneAsyncSettings() {
+
+                    @Override
+                    public boolean enabled() {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean enableCleanup() {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean enableExport() {
+                        return true;
+                    }
+                };
             }
         };
 

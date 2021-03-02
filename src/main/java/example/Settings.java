@@ -115,7 +115,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
             @Override
             public boolean enabled() {
-                return true;
+                return false;
             }
 
             @Override
@@ -125,7 +125,7 @@ public abstract class Settings implements ElideStandaloneSettings {
 
             @Override
             public boolean enableExport() {
-                return true;
+                return false;
             }
         };
     }
