@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Include(type = "version")
+@Include(name = "version", rootLevel = false)
 @Table(name = "artifactversion")
 @Entity
 public class ArtifactVersion {
