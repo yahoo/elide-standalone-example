@@ -2,6 +2,8 @@
 
 An archetype Elide project for Heroku using Postgres DB.  
 
+[![Build Status](https://cd.screwdriver.cd/pipelines/7925/badge)](https://cd.screwdriver.cd/pipelines/7925)
+
 ## Background
 
 This project is the sample code for [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
