@@ -7,6 +7,10 @@ package example;
 
 import com.yahoo.elide.standalone.ElideStandalone;
 
+import org.apache.activemq.artemis.core.config.Configuration;
+import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl;
+import org.apache.activemq.artemis.core.server.JournalType;
+import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -26,6 +30,17 @@ public class Main {
         if (inMemory) {
             settings.runLiquibaseMigrations();
         }
+
+        //Startup up an embedded active MQ.
+        EmbeddedActiveMQ embedded = new EmbeddedActiveMQ();
+        Configuration configuration = new ConfigurationImpl();
+        configuration.addAcceptorConfiguration("default", "vm://0");
+        configuration.setPersistenceEnabled(false);
+        configuration.setSecurityEnabled(false);
+        configuration.setJournalType(JournalType.NIO);
+
+        embedded.setConfiguration(configuration);
+        embedded.start();
 
         elide.start();
     }

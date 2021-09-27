@@ -11,12 +11,14 @@ import com.yahoo.elide.datastores.aggregation.queryengines.sql.dialects.SQLDiale
 import com.yahoo.elide.standalone.config.ElideStandaloneAnalyticSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneAsyncSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
+import com.yahoo.elide.standalone.config.ElideStandaloneSubscriptionSettings;
 import example.filters.CorsFilter;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
@@ -25,6 +27,7 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import javax.jms.ConnectionFactory;
 
 /**
  * This class contains common settings for both test and production.
@@ -107,6 +110,26 @@ public abstract class Settings implements ElideStandaloneSettings {
             }
         };
         return analyticPropeties;
+    }
+
+    @Override
+    public ElideStandaloneSubscriptionSettings getSubscriptionProperties() {
+        return new ElideStandaloneSubscriptionSettings() {
+            @Override
+            public boolean enabled() {
+                return true;
+            }
+
+            @Override
+            public String getPath() {
+                return "/subscription";
+            }
+
+            @Override
+            public ConnectionFactory getConnectionFactory() {
+                return new ActiveMQConnectionFactory("vm://0");
+            }
+        };
     }
 
     @Override
