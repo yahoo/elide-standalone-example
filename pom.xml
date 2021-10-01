@@ -16,7 +16,7 @@
         <jar.finalName>elide-heroku-example</jar.finalName>
         <postgres.version>42.2.7</postgres.version>
         <liquibase.version>3.5.3</liquibase.version>
-        <elide.version>5.0.9</elide.version>
+        <elide.version>6.0.0-pr4</elide.version>
         <swagger-ui.version>3.23.8</swagger-ui.version>
     </properties>
 
@@ -50,6 +50,13 @@
             <artifactId>rest-assured</artifactId>
             <version>2.9.0</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jms-server</artifactId>
+            <version>2.18.0</version>
         </dependency>
 
         <dependency>
@@ -99,8 +106,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>11</release>
                 </configuration>
             </plugin>
             <plugin>
