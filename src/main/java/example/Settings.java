@@ -27,7 +27,7 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-import javax.jms.ConnectionFactory;
+import jakarta.jms.ConnectionFactory;
 
 /**
  * This class contains common settings for both test and production.
@@ -167,9 +167,9 @@ public abstract class Settings implements ElideStandaloneSettings {
                     Main.class.getClassLoader().getResourceAsStream("dbconfig.properties")
             );
 
-            dbProps.setProperty("javax.persistence.jdbc.url", jdbcUrl);
-            dbProps.setProperty("javax.persistence.jdbc.user", jdbcUser);
-            dbProps.setProperty("javax.persistence.jdbc.password", jdbcPassword);
+            dbProps.setProperty("jakarta.persistence.jdbc.url", jdbcUrl);
+            dbProps.setProperty("jakarta.persistence.jdbc.user", jdbcUser);
+            dbProps.setProperty("jakarta.persistence.jdbc.password", jdbcPassword);
             return dbProps;
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -204,10 +204,10 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
         options.put("hibernate.default_batch_fetch_size", 100);
 
-        options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
-        options.put("javax.persistence.jdbc.url", jdbcUrl);
-        options.put("javax.persistence.jdbc.user", jdbcUser);
-        options.put("javax.persistence.jdbc.password", jdbcPassword);
+        options.put("jakarta.persistence.jdbc.driver", "org.h2.Driver");
+        options.put("jakarta.persistence.jdbc.url", jdbcUrl);
+        options.put("jakarta.persistence.jdbc.user", jdbcUser);
+        options.put("jakarta.persistence.jdbc.password", jdbcPassword);
 
         return options;
     }
