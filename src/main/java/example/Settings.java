@@ -14,7 +14,6 @@ import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSubscriptionSettings;
 import example.filters.CorsFilter;
 import liquibase.Liquibase;
-import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -62,13 +61,23 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public boolean enableSwagger() {
+    public boolean enableApiDocs() {
         return true;
     }
 
     @Override
     public boolean enableGraphQL() {
         return true;
+    }
+    
+    @Override
+    public String getJsonApiPathSpec() {
+        return "/api/*";
+    }
+
+    @Override
+    public String getGraphQLApiPathSpec() {
+        return "/graphql/api/*";
     }
 
     @Override
@@ -214,14 +223,10 @@ public abstract class Settings implements ElideStandaloneSettings {
 
     public void runLiquibaseMigrations() throws Exception {
         //Run Liquibase Initialization Script
-        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
-                new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)));
-
-        Liquibase liquibase = new liquibase.Liquibase(
-                "db/changelog/changelog.xml",
-                new ClassLoaderResourceAccessor(),
-                database);
-
-        liquibase.update("db1");
+        try (Liquibase liquibase = new liquibase.Liquibase("db/changelog/changelog.xml",
+                new ClassLoaderResourceAccessor(), DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
+                        new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword))))) {
+            liquibase.update("db1");
+        }
     }
 }

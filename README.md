@@ -25,7 +25,7 @@ To run from Heroku:
 See [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
 
 ## Contribute
-Please refer to [the contributing.md file](CONTRIBUTING.md) for information about how to get involved. We welcome issues, questions, and pull requests.
+Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for information about how to get involved. We welcome issues, questions, and pull requests.
 
 ## License
 This project is licensed under the terms of the [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html) open source license.
