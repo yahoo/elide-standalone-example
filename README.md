@@ -13,8 +13,8 @@ This project is the sample code for [Elide's Getting Started documentation](http
 To build and run:
 
 1. mvn clean install
-2. java -jar target/elide-heroku-example.jar
-3. Browse http://localhost:8080/
+2. java -jar target/elide-heroku-example-1.0.0.jar 
+4. Browse http://localhost:8080/
 
 To run from Heroku:
 
