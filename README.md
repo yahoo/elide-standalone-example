@@ -13,8 +13,8 @@ This project is the sample code for [Elide's Getting Started documentation](http
 To build and run:
 
 1. mvn clean install
-2. java -jar target/elide-heroku-example.jar
-3. Browse http://localhost:8080/
+2. java -jar target/elide-heroku-example-1.0.0.jar 
+4. Browse http://localhost:8080/
 
 To run from Heroku:
 
@@ -25,7 +25,7 @@ To run from Heroku:
 See [Elide's Getting Started documentation](https://github.com/yahoo/elide/tree/master/elide-standalone)
 
 ## Contribute
-Please refer to [the contributing.md file](CONTRIBUTING.md) for information about how to get involved. We welcome issues, questions, and pull requests.
+Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for information about how to get involved. We welcome issues, questions, and pull requests.
 
 ## License
 This project is licensed under the terms of the [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html) open source license.
