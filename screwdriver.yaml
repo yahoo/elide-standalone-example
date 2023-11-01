@@ -39,4 +39,3 @@ jobs:
     requires: [~pr:elide-4.x, ~commit:elide-4.x]
     steps:
       - build: mvn -B clean verify
-
