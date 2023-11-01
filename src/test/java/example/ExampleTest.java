@@ -7,17 +7,17 @@ package example;
 
 import com.yahoo.elide.core.exceptions.HttpStatus;
 import com.yahoo.elide.datastores.jms.websocket.SubscriptionWebSocketTestClient;
+import com.yahoo.elide.jsonapi.JsonApi;
 import com.yahoo.elide.test.graphql.GraphQLDSL;
 import org.junit.jupiter.api.Test;
 
-import javax.websocket.ContainerProvider;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
-import javax.ws.rs.core.MediaType;
+import jakarta.websocket.ContainerProvider;
+import jakarta.websocket.Session;
+import jakarta.websocket.WebSocketContainer;
+import jakarta.ws.rs.core.MediaType;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
-import static com.yahoo.elide.Elide.JSONAPI_CONTENT_TYPE;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static com.yahoo.elide.test.graphql.GraphQLDSL.field;
 import static com.yahoo.elide.test.graphql.GraphQLDSL.query;
 import static com.yahoo.elide.test.graphql.GraphQLDSL.selection;
@@ -50,7 +50,7 @@ public class ExampleTest extends IntegrationTest {
     @Test
     void jsonApiTest() {
         when()
-                .get("/api/v1/group")
+                .get("/api/group")
                 .then()
                 .body(equalTo(
                         data(
@@ -109,7 +109,7 @@ public class ExampleTest extends IntegrationTest {
             ).toQuery() + "\" }"
         )
         .when()
-            .post("/graphql/api/v1")
+            .post("/graphql/api")
             .then()
             .body(equalTo(GraphQLDSL.document(
                 selection(
@@ -145,7 +145,7 @@ public class ExampleTest extends IntegrationTest {
     public void testAsyncApiEndPoint() throws Exception {
         given()
                 .when()
-                .get("/api/v1/asyncQuery")
+                .get("/api/asyncQuery")
                 .then()
                 .statusCode(200);
     }
@@ -154,7 +154,7 @@ public class ExampleTest extends IntegrationTest {
     public void testDownloadAPI() throws Exception {
         given()
                 .when()
-                .get("/api/v1/downloads?fields[downloads]=downloads,group,product")
+                .get("/api/downloads?fields[downloads]=downloads,group,product")
                 .then()
                 .statusCode(200);
     }
@@ -172,8 +172,8 @@ public class ExampleTest extends IntegrationTest {
             client.waitOnSubscribe(10);
 
             given()
-                    .contentType(JSONAPI_CONTENT_TYPE)
-                    .accept(JSONAPI_CONTENT_TYPE)
+                    .contentType(JsonApi.MEDIA_TYPE)
+                    .accept(JsonApi.MEDIA_TYPE)
                     .body(
                             data(
                                     resource(
@@ -183,7 +183,7 @@ public class ExampleTest extends IntegrationTest {
                                     )
                             )
                     )
-                    .post("/api/v1/group")
+                    .post("/api/group")
                     .then().statusCode(org.apache.http.HttpStatus.SC_CREATED).body("data.id", equalTo("foo"));
 
 

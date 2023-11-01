@@ -14,7 +14,6 @@ import com.yahoo.elide.standalone.config.ElideStandaloneSettings;
 import com.yahoo.elide.standalone.config.ElideStandaloneSubscriptionSettings;
 import example.filters.CorsFilter;
 import liquibase.Liquibase;
-import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -27,7 +26,7 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-import javax.jms.ConnectionFactory;
+import jakarta.jms.ConnectionFactory;
 
 /**
  * This class contains common settings for both test and production.
@@ -62,13 +61,28 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
 
     @Override
-    public boolean enableSwagger() {
+    public boolean enableApiDocs() {
         return true;
     }
 
     @Override
     public boolean enableGraphQL() {
         return true;
+    }
+    
+    @Override
+    public String getApiDocsPathSpec() {
+        return "/doc/*";
+    }
+
+    @Override
+    public String getJsonApiPathSpec() {
+        return "/api/*";
+    }
+
+    @Override
+    public String getGraphQLApiPathSpec() {
+        return "/graphql/api/*";
     }
 
     @Override
@@ -167,9 +181,9 @@ public abstract class Settings implements ElideStandaloneSettings {
                     Main.class.getClassLoader().getResourceAsStream("dbconfig.properties")
             );
 
-            dbProps.setProperty("javax.persistence.jdbc.url", jdbcUrl);
-            dbProps.setProperty("javax.persistence.jdbc.user", jdbcUser);
-            dbProps.setProperty("javax.persistence.jdbc.password", jdbcPassword);
+            dbProps.setProperty("jakarta.persistence.jdbc.url", jdbcUrl);
+            dbProps.setProperty("jakarta.persistence.jdbc.user", jdbcUser);
+            dbProps.setProperty("jakarta.persistence.jdbc.password", jdbcPassword);
             return dbProps;
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -204,24 +218,20 @@ public abstract class Settings implements ElideStandaloneSettings {
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
         options.put("hibernate.default_batch_fetch_size", 100);
 
-        options.put("javax.persistence.jdbc.driver", "org.h2.Driver");
-        options.put("javax.persistence.jdbc.url", jdbcUrl);
-        options.put("javax.persistence.jdbc.user", jdbcUser);
-        options.put("javax.persistence.jdbc.password", jdbcPassword);
+        options.put("jakarta.persistence.jdbc.driver", "org.h2.Driver");
+        options.put("jakarta.persistence.jdbc.url", jdbcUrl);
+        options.put("jakarta.persistence.jdbc.user", jdbcUser);
+        options.put("jakarta.persistence.jdbc.password", jdbcPassword);
 
         return options;
     }
 
     public void runLiquibaseMigrations() throws Exception {
         //Run Liquibase Initialization Script
-        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
-                new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)));
-
-        Liquibase liquibase = new liquibase.Liquibase(
-                "db/changelog/changelog.xml",
-                new ClassLoaderResourceAccessor(),
-                database);
-
-        liquibase.update("db1");
+        try (Liquibase liquibase = new liquibase.Liquibase("db/changelog/changelog.xml",
+                new ClassLoaderResourceAccessor(), DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
+                        new JdbcConnection(DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword))))) {
+            liquibase.update("db1");
+        }
     }
 }
