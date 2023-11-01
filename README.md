@@ -14,7 +14,11 @@ To build and run:
 
 1. mvn clean install
 2. java -jar target/elide-heroku-example-1.0.0.jar 
-4. Browse http://localhost:8080/
+3. Browse http://localhost:8080/
+
+For API Versioning
+1. Browse http://localhost:8080/?path=/v1
+2. Browse http://localhost:8080/?path=/v2
 
 To run from Heroku:
 

@@ -71,6 +71,11 @@ public abstract class Settings implements ElideStandaloneSettings {
     }
     
     @Override
+    public String getApiDocsPathSpec() {
+        return "/doc/*";
+    }
+
+    @Override
     public String getJsonApiPathSpec() {
         return "/api/*";
     }
