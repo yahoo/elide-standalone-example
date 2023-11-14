@@ -13,14 +13,17 @@
     <version>1.0.0</version>
 
     <properties>
-        <jar.finalName>elide-heroku-example</jar.finalName>
-        <elide.version>7.0.0</elide.version>
-        <liquibase.version>4.24.0</liquibase.version>
-        <postgres.version>42.6.0</postgres.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.2.1</maven-surefire-plugin.version>
-        <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+        <jar.finalName>elide-heroku-example</jar.finalName>
+        <elide.version>7.1.0</elide.version>
+        <liquibase.version>4.29.0</liquibase.version>
+        <postgres.version>42.7.3</postgres.version>
+
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
+        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -36,16 +39,16 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Elide dependencies for example -->
         <dependency>
             <groupId>com.yahoo.elide</groupId>
             <artifactId>elide-standalone</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -61,13 +64,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -85,13 +81,11 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <scope>compile</scope>
         </dependency>
         
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <scope>compile</scope>
         </dependency>
         
         <!-- Test -->
