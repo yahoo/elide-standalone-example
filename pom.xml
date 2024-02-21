@@ -16,7 +16,7 @@
         <jar.finalName>elide-heroku-example</jar.finalName>
         <elide.version>7.0.0</elide.version>
         <liquibase.version>4.24.0</liquibase.version>
-        <postgres.version>42.6.0</postgres.version>
+        <postgres.version>42.7.2</postgres.version>
 
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.2.1</maven-surefire-plugin.version>
