@@ -18,8 +18,8 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import java.io.IOException;
 import java.sql.DriverManager;
@@ -200,8 +200,8 @@ public abstract class Settings implements ElideStandaloneSettings {
        ResourceHandler resource_handler = new ResourceHandler();
 
        try {
-           resource_handler.setDirectoriesListed(false);
-           resource_handler.setResourceBase(Settings.class.getClassLoader()
+           resource_handler.setDirAllowed(false);
+           resource_handler.setBaseResourceAsString(Settings.class.getClassLoader()
                    .getResource("META-INF/resources/").toURI().toString());
            servletContextHandler.insertHandler(resource_handler);
        } catch (Exception e) {
@@ -213,7 +213,6 @@ public abstract class Settings implements ElideStandaloneSettings {
         Properties options = new Properties();
 
         options.put("hibernate.show_sql", "true");
-        options.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         options.put("hibernate.current_session_context_class", "thread");
         options.put("hibernate.jdbc.use_scrollable_resultset", "true");
         options.put("hibernate.default_batch_fetch_size", 100);
